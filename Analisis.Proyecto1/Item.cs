@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Console;
 
 namespace Analisis.Proyecto1
 {
@@ -19,6 +20,11 @@ namespace Analisis.Proyecto1
         public Item()
         {
 
+        }
+
+        public void imprimirItem()
+        {
+            WriteLine("Pos arriba: " + arriba + " - Pos abajo: " + abajo + " - Pos izquierda: " + izquierda + " - Pos derecha: " + derecha);
         }
     }
 }

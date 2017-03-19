@@ -4,3 +4,9 @@ c:\users\alber\documents\visual studio 2015\Projects\Analisis.Proyecto1\Analisis
 c:\users\alber\documents\visual studio 2015\Projects\Analisis.Proyecto1\Analisis.Proyecto1\obj\Debug\Analisis.Proyecto1.csprojResolveAssemblyReference.cache
 c:\users\alber\documents\visual studio 2015\Projects\Analisis.Proyecto1\Analisis.Proyecto1\obj\Debug\Analisis.Proyecto1.exe
 c:\users\alber\documents\visual studio 2015\Projects\Analisis.Proyecto1\Analisis.Proyecto1\obj\Debug\Analisis.Proyecto1.pdb
+C:\Users\kembl\Documents\Ingenieria en computacion TEC\3 SEM\Analisis de algoritmos\Primer proyecto\Analisis.Proyecto1\bin\Debug\Analisis.Proyecto1.exe.config
+C:\Users\kembl\Documents\Ingenieria en computacion TEC\3 SEM\Analisis de algoritmos\Primer proyecto\Analisis.Proyecto1\obj\Debug\Analisis.Proyecto1.exe
+C:\Users\kembl\Documents\Ingenieria en computacion TEC\3 SEM\Analisis de algoritmos\Primer proyecto\Analisis.Proyecto1\obj\Debug\Analisis.Proyecto1.pdb
+C:\Users\kembl\Documents\Ingenieria en computacion TEC\3 SEM\Analisis de algoritmos\Primer proyecto\Analisis.Proyecto1\bin\Debug\Analisis.Proyecto1.exe
+C:\Users\kembl\Documents\Ingenieria en computacion TEC\3 SEM\Analisis de algoritmos\Primer proyecto\Analisis.Proyecto1\bin\Debug\Analisis.Proyecto1.pdb
+C:\Users\kembl\Documents\Ingenieria en computacion TEC\3 SEM\Analisis de algoritmos\Primer proyecto\Analisis.Proyecto1\obj\Debug\Analisis.Proyecto1.csprojResolveAssemblyReference.cache

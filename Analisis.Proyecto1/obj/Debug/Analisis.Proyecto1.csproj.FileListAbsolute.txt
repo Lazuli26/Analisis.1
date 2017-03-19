@@ -10,3 +10,9 @@ C:\Users\kembl\Documents\Ingenieria en computacion TEC\3 SEM\Analisis de algorit
 C:\Users\kembl\Documents\Ingenieria en computacion TEC\3 SEM\Analisis de algoritmos\Primer proyecto\Analisis.Proyecto1\bin\Debug\Analisis.Proyecto1.exe
 C:\Users\kembl\Documents\Ingenieria en computacion TEC\3 SEM\Analisis de algoritmos\Primer proyecto\Analisis.Proyecto1\bin\Debug\Analisis.Proyecto1.pdb
 C:\Users\kembl\Documents\Ingenieria en computacion TEC\3 SEM\Analisis de algoritmos\Primer proyecto\Analisis.Proyecto1\obj\Debug\Analisis.Proyecto1.csprojResolveAssemblyReference.cache
+C:\Users\Usuario\Desktop\Analisi\Analisis.Proyecto1\bin\Debug\Analisis.Proyecto1.exe.config
+C:\Users\Usuario\Desktop\Analisi\Analisis.Proyecto1\obj\Debug\Analisis.Proyecto1.exe
+C:\Users\Usuario\Desktop\Analisi\Analisis.Proyecto1\obj\Debug\Analisis.Proyecto1.pdb
+C:\Users\Usuario\Desktop\Analisi\Analisis.Proyecto1\bin\Debug\Analisis.Proyecto1.exe
+C:\Users\Usuario\Desktop\Analisi\Analisis.Proyecto1\bin\Debug\Analisis.Proyecto1.pdb
+C:\Users\Usuario\Desktop\Analisi\Analisis.Proyecto1\obj\Debug\Analisis.Proyecto1.csprojResolveAssemblyReference.cache

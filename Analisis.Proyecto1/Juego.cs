@@ -76,11 +76,34 @@ namespace Analisis.Proyecto1
                 }
             }
         }
+        public List<List<Item>> clonar(List<List<Item>> target)
+        {
+            List<List<Item>> clon = new List<List<Item>>();
+            for (int i = 0; i < target.Count; i++)
+            {
+                clon.Add(new List<Item>());
+                for (int x = 0; x < target[i].Count; x++)
+                {
+                    clon[i].Add(target[i][x]);
+                }
+            }
+            return clon;
+        }
+
+        public List<Item> clonar(List<Item> target)
+        {
+            List<Item> clon = new List<Item>();
+            for (int x = 0; x < target.Count; x++)
+            {
+                clon.Add(target[x]);
+            }
+            return clon;
+        }
 
         public void descarte()
         {
-            descarteRec(opciones.ToList(),0,0,0,tablero.ToList());
-            WriteLine("\n\nMatriz originaal...");
+            descarteRec(clonar(opciones),0,0, clonar(tablero));
+            WriteLine("\n\nMatriz original...");
             imprimir(respuesta);
 
             WriteLine("\n\nMatriz calculada...");
@@ -88,78 +111,82 @@ namespace Analisis.Proyecto1
             ReadKey();
         }
 
-        public bool descarteRec(List<Item> listaOpciones, int x, int y, int recursividad, List<List<Item>> tableRec)
+        public bool descarteRec(List<Item> listaOpciones, int x, int y, List<List<Item>> tableRec)
         {
-            
-            if (listaOpciones.Count != 0)
+            for (int i = 0; i < listaOpciones.Count; i++)
             {
-                bool correcto = false;
-                for (int i = 0; i < listaOpciones.Count; i++)
+                bool xT = false;
+                bool yT = false;
+                if (x == 0)
+                    xT = true;
+                else if (tableRec[x - 1][y].abajo == listaOpciones[i].arriba)
+                    xT = true;
+                if (y == 0)
+                    yT = true;
+                else if (tableRec[x][y - 1].derecha == listaOpciones[i].izquierda)
+                    yT = true;
+                if (xT && yT)
                 {
                     tableRec[x][y] = listaOpciones[i];
-                    
-
-                    if (x == 0)
+                    if (listaOpciones.Count == 1)
                     {
-                        correcto = true;
+                        this.tablero = tableRec;
+                        return true;
                     }
                     else
                     {
-                        if (tableRec[x - 1][y].abajo == listaOpciones[i].arriba)
+                        List<Item> temp = clonar(listaOpciones);
+                        temp.RemoveAt(i);
+                        if (descarteRec(clonar(temp), x + (y / (tableRec[x].Count-1)), (y + 1) % tableRec[x].Count, tableRec))
                         {
-                            correcto = true;
-                        }
-                    }
-
-                    if (y != 0 && correcto)
-                    {
-                        if (tableRec[x][y-1].derecha != listaOpciones[i].izquierda)
-                        {
-                            correcto = false;
-                        }
-                    }
-
-                    if (correcto)
-                    {
-
-                        List<Item> listaInf = listaOpciones.ToList();
-                        listaInf.RemoveAt(i);
-
-                        if (y == tamañoMatriz - 1)
-                        {
-                            y = 0;
-                            if (descarteRec(listaInf, x+1, y,recursividad+1, tableRec.ToList()))
-                                return true;
-                        }
-                        else
-                        {
-                            if (descarteRec(listaInf,x,y+1,recursividad+1, tableRec.ToList()))
-                                return true;
+                            return true;
                         }
                     }
                 }
-                return false;
+            }
+            return false;
+        }
+        public void fuerza()
+        {
+            fuerzaRec(clonar(opciones), 0, 0, clonar(tablero));
+            WriteLine("\n\nMatriz original...");
+            imprimir(respuesta);
+            ReadKey();
+        }
+
+        public void fuerzaRec(List<Item> listaOpciones, int x, int y, List<List<Item>> tableRec)
+        {
+            if (listaOpciones.Count != 0)
+            {
+                for (int i = 0; i < listaOpciones.Count; i++)
+                {
+                    tableRec[x][y] = listaOpciones[i];
+                    List<Item> temp = clonar(listaOpciones);
+                    temp.RemoveAt(i);
+                    fuerzaRec(temp, x + (y / (tableRec[x].Count - 1)), (y + 1) % tableRec[x].Count, clonar(tableRec));
+                }
             }
             else
             {
-                tablero = tableRec;
-
-                WriteLine("\n\nMatriz tablero...");
-                imprimir(tablero);
-                return true;
+                bool prueba = true;
+                for (int i = 0; i < tableRec.Count && prueba; i++)
+                {
+                    for (int j = 0; j < tableRec[i].Count && prueba; j++)
+                    {
+                        if (i != 0)
+                            if (tableRec[i - 1][j].abajo != tableRec[i][j].arriba) { }
+                                prueba = false;
+                        if (j != 0)
+                            if (tableRec[i][j - 1].derecha != tableRec[i][j].izquierda)
+                                prueba = false;
+                    }
+                }
+                if (prueba)
+                {
+                    WriteLine("Se ha encontrado una coincidencia");
+                    imprimir(tableRec);
+                }
             }
-        }
-
-
-
-        public void fuerzaBruta()
-        {
-            fuerzaBrutaRec(opciones, 0,0);
-        }
-
-        public void fuerzaBrutaRec(List<Item> listaOpciones, int x, int y)
-        {
-
         }
 
         public void tanteo()

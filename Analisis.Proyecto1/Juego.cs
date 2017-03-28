@@ -76,6 +76,7 @@ namespace Analisis.Proyecto1
                 }
             }
         }
+        /*
         public List<List<Item>> clonar(List<List<Item>> target)
         {
             List<List<Item>> clon = new List<List<Item>>();
@@ -99,15 +100,16 @@ namespace Analisis.Proyecto1
             }
             return clon;
         }
-
+        */
         public void descarte()
         {
-            descarteRec(clonar(opciones),0,0, clonar(tablero));
+            descarteRec(opciones,0,0, tablero);
+
+            WriteLine("\nMatriz calculada...");
+            imprimir(tablero);
+
             WriteLine("\n\nMatriz original...");
             imprimir(respuesta);
-
-            WriteLine("\n\nMatriz calculada...");
-            imprimir(tablero);
             ReadKey();
         }
 
@@ -135,12 +137,14 @@ namespace Analisis.Proyecto1
                     }
                     else
                     {
-                        List<Item> temp = clonar(listaOpciones);
-                        temp.RemoveAt(i);
-                        if (descarteRec(clonar(temp), x + (y / (tableRec[x].Count-1)), (y + 1) % tableRec[x].Count, tableRec))
+                        Item temp = listaOpciones[i];
+                        listaOpciones.RemoveAt(i);
+                        if (descarteRec(listaOpciones, x + (y / (tableRec[x].Count - 1)), (y + 1) % tableRec[x].Count, tableRec))
                         {
+                            listaOpciones.Insert(i, temp);
                             return true;
                         }
+                        listaOpciones.Insert(i, temp);
                     }
                 }
             }
@@ -148,7 +152,7 @@ namespace Analisis.Proyecto1
         }
         public void fuerza()
         {
-            fuerzaRec(clonar(opciones), 0, 0, clonar(tablero));
+            fuerzaRec(opciones, 0, 0, tablero);
             WriteLine("\n\nMatriz original...");
             imprimir(respuesta);
             ReadKey();
@@ -161,9 +165,10 @@ namespace Analisis.Proyecto1
                 for (int i = 0; i < listaOpciones.Count; i++)
                 {
                     tableRec[x][y] = listaOpciones[i];
-                    List<Item> temp = clonar(listaOpciones);
-                    temp.RemoveAt(i);
-                    fuerzaRec(temp, x + (y / (tableRec[x].Count - 1)), (y + 1) % tableRec[x].Count, clonar(tableRec));
+                    Item temp =listaOpciones[i];
+                    listaOpciones.RemoveAt(i);
+                    fuerzaRec(listaOpciones, x + (y / (tableRec[x].Count - 1)), (y + 1) % tableRec[x].Count, tableRec);
+                    listaOpciones.Insert(i, temp);
                 }
             }
             else
@@ -174,15 +179,24 @@ namespace Analisis.Proyecto1
                     for (int j = 0; j < tableRec[i].Count && prueba; j++)
                     {
                         if (i != 0)
-                            if (tableRec[i - 1][j].abajo != tableRec[i][j].arriba) { }
+                        {
+                            if (tableRec[i - 1][j].abajo != tableRec[i][j].arriba)
+                            {
                                 prueba = false;
+                            }
+                        }
                         if (j != 0)
+                        {
                             if (tableRec[i][j - 1].derecha != tableRec[i][j].izquierda)
+                            {
                                 prueba = false;
+                            }
+                        }
                     }
                 }
                 if (prueba)
                 {
+                    Console.WriteLine();
                     WriteLine("Se ha encontrado una coincidencia");
                     imprimir(tableRec);
                 }

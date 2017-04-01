@@ -16,3 +16,9 @@ C:\Users\Usuario\Desktop\Analisi\Analisis.Proyecto1\obj\Debug\Analisis.Proyecto1
 C:\Users\Usuario\Desktop\Analisi\Analisis.Proyecto1\bin\Debug\Analisis.Proyecto1.exe
 C:\Users\Usuario\Desktop\Analisi\Analisis.Proyecto1\bin\Debug\Analisis.Proyecto1.pdb
 C:\Users\Usuario\Desktop\Analisi\Analisis.Proyecto1\obj\Debug\Analisis.Proyecto1.csprojResolveAssemblyReference.cache
+C:\Users\Usuario\Desktop\Analisis\Analisis.Proyecto1\bin\Debug\Analisis.Proyecto1.exe.config
+C:\Users\Usuario\Desktop\Analisis\Analisis.Proyecto1\obj\Debug\Analisis.Proyecto1.exe
+C:\Users\Usuario\Desktop\Analisis\Analisis.Proyecto1\obj\Debug\Analisis.Proyecto1.pdb
+C:\Users\Usuario\Desktop\Analisis\Analisis.Proyecto1\bin\Debug\Analisis.Proyecto1.exe
+C:\Users\Usuario\Desktop\Analisis\Analisis.Proyecto1\bin\Debug\Analisis.Proyecto1.pdb
+C:\Users\Usuario\Desktop\Analisis\Analisis.Proyecto1\obj\Debug\Analisis.Proyecto1.csprojResolveAssemblyReference.cache

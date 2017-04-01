@@ -24,15 +24,15 @@ namespace Analisis.Proyecto1
                 {
                     respuesta[x].Add(new Item());
                     if (x == 0)
-                        respuesta[x][y].arriba = rnd.Next(1, 9);
+                        respuesta[x][y].arriba = rnd.Next(0, 10);
                     else
                         respuesta[x][y].arriba = respuesta[x - 1][y].abajo;
                     if (y == 0)
-                        respuesta[x][y].izquierda = rnd.Next(1, 9);
+                        respuesta[x][y].izquierda = rnd.Next(0, 10);
                     else
                         respuesta[x][y].izquierda = respuesta[x][y - 1].derecha;
-                    respuesta[x][y].abajo = rnd.Next(1, 9);
-                    respuesta[x][y].derecha = rnd.Next(1, 9);
+                    respuesta[x][y].abajo = rnd.Next(0, 10);
+                    respuesta[x][y].derecha = rnd.Next(0, 10);
                     opciones.Add(respuesta[x][y]);
                 }
             }
@@ -75,7 +75,9 @@ namespace Analisis.Proyecto1
                     }
                 }
             }
+            WriteLine("");
         }
+        /*
         public List<List<Item>> clonar(List<List<Item>> target)
         {
             List<List<Item>> clon = new List<List<Item>>();
@@ -99,18 +101,18 @@ namespace Analisis.Proyecto1
             }
             return clon;
         }
-
+        */
         public void descarte()
         {
-            descarteRec(clonar(opciones),0,0, clonar(tablero));
+            descarteRec(opciones,0,0, tablero);
+
+            WriteLine("\nMatriz calculada...");
+            imprimir(tablero);
+
             WriteLine("\n\nMatriz original...");
             imprimir(respuesta);
-
-            WriteLine("\n\nMatriz calculada...");
-            imprimir(tablero);
             ReadKey();
         }
-
         public bool descarteRec(List<Item> listaOpciones, int x, int y, List<List<Item>> tableRec)
         {
             for (int i = 0; i < listaOpciones.Count; i++)
@@ -135,12 +137,14 @@ namespace Analisis.Proyecto1
                     }
                     else
                     {
-                        List<Item> temp = clonar(listaOpciones);
-                        temp.RemoveAt(i);
-                        if (descarteRec(clonar(temp), x + (y / (tableRec[x].Count-1)), (y + 1) % tableRec[x].Count, tableRec))
+                        Item temp = listaOpciones[i];
+                        listaOpciones.RemoveAt(i);
+                        if (descarteRec(listaOpciones, x + (y / (tableRec[x].Count - 1)), (y + 1) % tableRec[x].Count, tableRec))
                         {
+                            listaOpciones.Insert(i, temp);
                             return true;
                         }
+                        listaOpciones.Insert(i, temp);
                     }
                 }
             }
@@ -148,12 +152,11 @@ namespace Analisis.Proyecto1
         }
         public void fuerza()
         {
-            fuerzaRec(clonar(opciones), 0, 0, clonar(tablero));
+            fuerzaRec(opciones, 0, 0, tablero);
             WriteLine("\n\nMatriz original...");
             imprimir(respuesta);
             ReadKey();
         }
-
         public void fuerzaRec(List<Item> listaOpciones, int x, int y, List<List<Item>> tableRec)
         {
             if (listaOpciones.Count != 0)
@@ -161,9 +164,10 @@ namespace Analisis.Proyecto1
                 for (int i = 0; i < listaOpciones.Count; i++)
                 {
                     tableRec[x][y] = listaOpciones[i];
-                    List<Item> temp = clonar(listaOpciones);
-                    temp.RemoveAt(i);
-                    fuerzaRec(temp, x + (y / (tableRec[x].Count - 1)), (y + 1) % tableRec[x].Count, clonar(tableRec));
+                    Item temp =listaOpciones[i];
+                    listaOpciones.RemoveAt(i);
+                    fuerzaRec(listaOpciones, x + (y / (tableRec[x].Count - 1)), (y + 1) % tableRec[x].Count, tableRec);
+                    listaOpciones.Insert(i, temp);
                 }
             }
             else
@@ -174,24 +178,134 @@ namespace Analisis.Proyecto1
                     for (int j = 0; j < tableRec[i].Count && prueba; j++)
                     {
                         if (i != 0)
-                            if (tableRec[i - 1][j].abajo != tableRec[i][j].arriba) { }
+                        {
+                            if (tableRec[i - 1][j].abajo != tableRec[i][j].arriba)
+                            {
                                 prueba = false;
+                            }
+                        }
                         if (j != 0)
+                        {
                             if (tableRec[i][j - 1].derecha != tableRec[i][j].izquierda)
+                            {
                                 prueba = false;
+                            }
+                        }
                     }
                 }
                 if (prueba)
                 {
+                    Console.WriteLine();
                     WriteLine("Se ha encontrado una coincidencia");
                     imprimir(tableRec);
                 }
             }
         }
-
+        
         public void tanteo()
         {
+            List<List<List<int>>> contenedor = new List<List<List<int>>>();
+            imprimirLista(opciones);
 
+            for (int i = 0; i < 10; i++)
+            {
+                contenedor.Add(new List<List<int>>());
+                for (int j = 0; j < 4; j++)
+                {
+                    contenedor[i].Add(new List<int>());
+                }
+            }
+
+            //insercion a la matriz 3d
+            for (int i = 0; i < opciones.Count; i++)
+            {
+                contenedor[opciones[i].arriba][0].Add(i);
+                contenedor[opciones[i].abajo][1].Add(i);
+                contenedor[opciones[i].izquierda][2].Add(i);
+                contenedor[opciones[i].derecha][3].Add(i);
+            }
+
+            WriteLine();
+            imprimir3D(contenedor);
+
+            //creacion de grupos
+            List<List<int>> grupos = new List<List<int>>();
+            for (int i = 0; i < 5; i++)
+            {
+                grupos.Add(new List<int>());
+            }
+
+            //grupos: arriba, abajo, izq, der, comunes
+
+            for (int i = 0; i < 10; i++)
+            {
+                for (int j = 0; j < 2; j++)
+                {
+                    if (contenedor[i][j*2].Count == 0 && contenedor[i][(j*2)+1].Count != 0)
+                    {
+                        for (int k = 0; k < contenedor[i][(j * 2) + 1].Count; k++)
+                        {
+                            grupos[(j * 2) + 1].Add(contenedor[i][(j * 2) + 1][k]);
+                        }
+                    }
+                    else if (contenedor[i][j * 2].Count != 0 && contenedor[i][(j * 2) + 1].Count == 0)
+                    {
+                        for (int k = 0; k < contenedor[i][j * 2].Count; k++)
+                        {
+                            grupos[j * 2].Add(contenedor[i][j * 2][k]);
+                        }
+                    }
+                    else
+                    {
+                        for (int k = 0; k < contenedor[i][(j * 2) + 1].Count; k++)
+                        {
+                            if(!grupos[4].Contains(contenedor[i][(j * 2) + 1][k]))
+                                grupos[4].Add(contenedor[i][(j * 2) + 1][k]);
+                        }
+                        for (int k = 0; k < contenedor[i][j * 2].Count; k++)
+                        {
+                            if (!grupos[4].Contains(contenedor[i][j * 2][k]))
+                                grupos[4].Add(contenedor[i][j * 2][k]);
+                        }
+                    }
+                }
+            }
+
+            for (int i = 0; i < 5; i++)
+            {
+                for (int j = 0; j < grupos[i].Count; j++)
+                {
+                    Write(grupos[i][j]+", ");
+                }
+                WriteLine();
+            }
+            ReadKey();
+
+        }
+
+        void imprimir3D(List<List<List<int>>> contenedor)
+        {
+            for (int i = 0; i < contenedor.Count; i++)
+            {
+                Write(i+ ": \t");
+                for (int j = 0; j < contenedor[i].Count; j++)
+                {
+                    for (int k = 0; k < contenedor[i][j].Count; k++)
+                    {
+                        Write(contenedor[i][j][k]+",");
+                    }
+                    Write("\t\t|");
+                }
+                WriteLine();
+            }
+            
+        }
+
+        public bool tanteoRec()
+        {
+            
+
+            return false;
         }
 
         public void imprimirLista(List<Item> listaOpciones)
@@ -211,6 +325,7 @@ namespace Analisis.Proyecto1
             {
                 Write("  " + listaOpciones[i].abajo.ToString() + "  ");
             }
+            WriteLine();
         }
     }
 }

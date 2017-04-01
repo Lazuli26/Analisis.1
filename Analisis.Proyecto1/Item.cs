@@ -10,6 +10,7 @@ namespace Analisis.Proyecto1
     class Item
     {
         public int arriba, abajo, izquierda, derecha;
+        public bool colocado = false;
         public Item(int ar,int ab,int iz,int der)
         {
             arriba = ar;

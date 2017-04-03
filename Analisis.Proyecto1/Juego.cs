@@ -201,28 +201,38 @@ namespace Analisis.Proyecto1
                 }
             }
         }
-        
+ //---------------------------------------------------------------------------------------------------       
         public void tanteo()
         {
-            List<List<List<int>>> contenedor = new List<List<List<int>>>();
+            List<List<List<List<int>>>> contenedor = new List<List<List<List<int>>>>();
             imprimirLista(opciones);
 
             for (int i = 0; i < 10; i++)
             {
-                contenedor.Add(new List<List<int>>());
+                contenedor.Add(new List<List<List<int>>>());
                 for (int j = 0; j < 4; j++)
                 {
-                    contenedor[i].Add(new List<int>());
+                    contenedor[i].Add(new List<List<int>>());
+                    for (int k = 0; k < 2; k++)
+                    {
+                        contenedor[i][j].Add(new List<int>());
+
+                    }
+                    contenedor[i][j][1].Add(0);
                 }
             }
 
             //insercion a la matriz 3d
             for (int i = 0; i < opciones.Count; i++)
             {
-                contenedor[opciones[i].arriba][0].Add(i);
-                contenedor[opciones[i].abajo][1].Add(i);
-                contenedor[opciones[i].izquierda][2].Add(i);
-                contenedor[opciones[i].derecha][3].Add(i);
+                contenedor[opciones[i].arriba][0][0].Add(i);
+                contenedor[opciones[i].abajo][1][0].Add(i);
+                contenedor[opciones[i].izquierda][2][0].Add(i);
+                contenedor[opciones[i].derecha][3][0].Add(i);
+                contenedor[opciones[i].arriba][0][1][0]++;
+                contenedor[opciones[i].abajo][1][1][0]++;
+                contenedor[opciones[i].izquierda][2][1][0]++;
+                contenedor[opciones[i].derecha][3][1][0]++;
             }
 
             WriteLine();
@@ -235,64 +245,98 @@ namespace Analisis.Proyecto1
                 grupos.Add(new List<int>());
             }
 
-            //grupos: arriba, abajo, izq, der, comunes
+            //grupos: 
+            // primera iteracion: arriba, abajo, 
+            // segunda iteracion: izq, der, 
+            // dos iteraciones: comunes
 
             for (int i = 0; i < 10; i++)
             {
                 for (int j = 0; j < 2; j++)
                 {
-                    if (contenedor[i][j*2].Count == 0 && contenedor[i][(j*2)+1].Count != 0)
+                    if (contenedor[i][j * 2][0].Count == 0 && contenedor[i][(j * 2) + 1][0].Count != 0)
                     {
-                        for (int k = 0; k < contenedor[i][(j * 2) + 1].Count; k++)
+                        for (int k = 0; k < contenedor[i][(j * 2) + 1][0].Count; k++)
                         {
-                            grupos[(j * 2) + 1].Add(contenedor[i][(j * 2) + 1][k]);
+                            if(!opciones[contenedor[i][(j * 2) + 1][0][k]].colocado)
+                            {
+                                grupos[(j * 2) + 1].Add(contenedor[i][(j * 2) + 1][0][k]);
+                                opciones[contenedor[i][(j * 2) + 1][0][k]].colocado = true;
+                            }      
                         }
                     }
-                    else if (contenedor[i][j * 2].Count != 0 && contenedor[i][(j * 2) + 1].Count == 0)
+                    else if (contenedor[i][j * 2][0].Count != 0 && contenedor[i][(j * 2) + 1][0].Count == 0)
                     {
-                        for (int k = 0; k < contenedor[i][j * 2].Count; k++)
+                        for (int k = 0; k < contenedor[i][j * 2][0].Count; k++)
                         {
-                            grupos[j * 2].Add(contenedor[i][j * 2][k]);
+                            if (!opciones[contenedor[i][(j * 2)][0][k]].colocado)
+                            {
+                                grupos[j * 2].Add(contenedor[i][j * 2][0][k]);
+                                opciones[contenedor[i][(j * 2)][0][k]].colocado = true;
+                            }
+                                
                         }
                     }
+                    //esquina podria ser factible
                     else
                     {
-                        for (int k = 0; k < contenedor[i][(j * 2) + 1].Count; k++)
+                        for (int k = 0; k < contenedor[i][(j * 2) + 1][0].Count; k++)
                         {
-                            if(!grupos[4].Contains(contenedor[i][(j * 2) + 1][k]))
-                                grupos[4].Add(contenedor[i][(j * 2) + 1][k]);
+                            if (!opciones[contenedor[i][(j * 2) + 1][0][k]].colocado)
+                            {
+                                grupos[4].Add(contenedor[i][(j * 2) + 1][0][k]);
+                                opciones[contenedor[i][(j * 2) + 1][0][k]].colocado = true;
+                            }
+                                
                         }
-                        for (int k = 0; k < contenedor[i][j * 2].Count; k++)
+                        for (int k = 0; k < contenedor[i][j * 2][0].Count; k++)
                         {
-                            if (!grupos[4].Contains(contenedor[i][j * 2][k]))
-                                grupos[4].Add(contenedor[i][j * 2][k]);
+                            if (!opciones[contenedor[i][(j * 2)][0][k]].colocado)
+                            {
+                                grupos[4].Add(contenedor[i][j * 2][0][k]);
+                                opciones[contenedor[i][(j * 2)][0][k]].colocado = true;
+                            }  
                         }
                     }
                 }
             }
 
+            for (int i = 0; i < opciones.Count; i++)
+            {
+                opciones[i].colocado = false;
+            }
+
             for (int i = 0; i < 5; i++)
             {
+                Write("Pos "+i+": ");
                 for (int j = 0; j < grupos[i].Count; j++)
                 {
                     Write(grupos[i][j]+", ");
                 }
                 WriteLine();
             }
+            WriteLine();
+            ReadKey();
+
+            tanteoRec(contenedor, tablero, opciones, grupos, 0,0);
+            WriteLine("\nMatriz calculada...");
+            imprimir(tablero);
+
+            WriteLine("\n\nMatriz original...");
+            imprimir(respuesta);
             ReadKey();
 
         }
-
-        void imprimir3D(List<List<List<int>>> contenedor)
+        void imprimir3D(List<List<List<List<int>>>> contenedor)
         {
-            for (int i = 0; i < contenedor.Count; i++)
+            for (int i = 0; i < 10; i++)
             {
                 Write(i+ ": \t");
-                for (int j = 0; j < contenedor[i].Count; j++)
+                for (int j = 0; j < 4; j++)
                 {
-                    for (int k = 0; k < contenedor[i][j].Count; k++)
+                    for (int k = 0; k < contenedor[i][j][0].Count; k++)
                     {
-                        Write(contenedor[i][j][k]+",");
+                        Write(contenedor[i][j][0][k]+",");
                     }
                     Write("\t\t|");
                 }
@@ -300,13 +344,103 @@ namespace Analisis.Proyecto1
             }
             
         }
-
-        public bool tanteoRec()
+        public bool tanteoRec(List<List<List<List<int>>>> contenedor, List<List<Item>> tableRec, List<Item> listaOpciones, List<List<int>> grupos, int x, int y)
         {
-            
+            List<int> ordenIndices = new List<int>();
+            if (x == 0)
+            {
+                ordenIndices.Add(0);
+                ordenIndices.Add(2);
+                ordenIndices.Add(3);
+                ordenIndices.Add(4);
 
+            }
+            else if (x == tableRec.Count - 1)
+            {
+                ordenIndices.Add(1);
+                ordenIndices.Add(2);
+                ordenIndices.Add(3);
+                ordenIndices.Add(4);
+            }
+            else if (y == 0)
+            {
+                ordenIndices.Add(2);
+                ordenIndices.Add(0);
+                ordenIndices.Add(1);
+                ordenIndices.Add(4);
+            }
+            else if (y == tableRec.Count - 1)
+            {
+                ordenIndices.Add(3);
+                ordenIndices.Add(0);
+                ordenIndices.Add(1);
+                ordenIndices.Add(4);
+            }
+            else
+            {
+                ordenIndices.Add(4);
+            }
+
+            for (int i = 0; i < ordenIndices.Count; i++)
+            {
+                for (int j = 0; j < grupos[ordenIndices[i]].Count; j++)
+                {
+                    if (listaOpciones[grupos[ordenIndices[i]][j]].colocado)
+                    {
+                        continue;
+                    }
+
+                    bool xT = false;
+                    bool yT = false;
+                    if (x == 0)
+                        xT = true;
+                    else if (tableRec[x - 1][y].abajo == listaOpciones[grupos[ordenIndices[i]][j]].arriba)
+                    {
+                        xT = true;
+                    }                
+                    if (y == 0)
+                        yT = true;
+                    else if (tableRec[x][y - 1].derecha == listaOpciones[grupos[ordenIndices[i]][j]].izquierda)
+                    {
+                        yT = true;
+                    }
+                        
+                    if (xT && yT)
+                    {
+                        listaOpciones[grupos[ordenIndices[i]][j]].colocado = true;
+                        tableRec[x][y] = listaOpciones[grupos[ordenIndices[i]][j]];
+                        contenedor[listaOpciones[grupos[ordenIndices[i]][j]].arriba][0][1][0]--;
+                        contenedor[listaOpciones[grupos[ordenIndices[i]][j]].abajo][1][1][0]--;
+                        contenedor[listaOpciones[grupos[ordenIndices[i]][j]].izquierda][2][1][0]--;
+                        contenedor[listaOpciones[grupos[ordenIndices[i]][j]].derecha][3][1][0]--;
+
+
+                        if (x == tableRec.Count -1 && y == tableRec.Count - 1)
+                        {
+                            this.tablero = tableRec;
+                            return true;
+                        }
+                        else
+                        {
+                            bool rt = tanteoRec(contenedor, tableRec, listaOpciones, grupos, x + (y / (tableRec[x].Count - 1)), (y + 1) % tableRec[x].Count);
+                            listaOpciones[grupos[ordenIndices[i]][j]].colocado = false;
+                            contenedor[listaOpciones[grupos[ordenIndices[i]][j]].arriba][0][1][0]++;
+                            contenedor[listaOpciones[grupos[ordenIndices[i]][j]].abajo][1][1][0]++;
+                            contenedor[listaOpciones[grupos[ordenIndices[i]][j]].izquierda][2][1][0]++;
+                            contenedor[listaOpciones[grupos[ordenIndices[i]][j]].derecha][3][1][0]++;
+
+
+                            if (rt)
+                            {
+                                return true;
+                            }
+                        }
+                    }
+                }
+            }          
             return false;
         }
+//------------------------------------------------------------------------------------------------------------------
 
         public void imprimirLista(List<Item> listaOpciones)
         {

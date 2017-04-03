@@ -11,7 +11,7 @@ namespace Analisis.Proyecto1
     {
         static void Main(string[] args)
         {
-            var juego = new Juego(3);
+            var juego = new Juego(6);
             juego.tanteo();
         }
     }

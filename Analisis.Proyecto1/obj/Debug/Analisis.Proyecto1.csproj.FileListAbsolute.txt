@@ -31,3 +31,9 @@ C:\Users\Usuario\Desktop\Analisis\Analisis.Proyecto1\obj\Debug\Analisis.Proyecto
 C:\Users\alber\Google Drive\TEC\Analisis de algoritmos\Proyecto 1\Analisis.Proyecto1\bin\Debug\Analisis.Proyecto1.exe
 C:\Users\alber\Google Drive\TEC\Analisis de algoritmos\Proyecto 1\Analisis.Proyecto1\bin\Debug\Analisis.Proyecto1.pdb
 C:\Users\alber\Google Drive\TEC\Analisis de algoritmos\Proyecto 1\Analisis.Proyecto1\obj\Debug\Analisis.Proyecto1.csprojResolveAssemblyReference.cache
+E:\Proyecto 1\Analisis.Proyecto1\bin\Debug\Analisis.Proyecto1.exe.config
+E:\Proyecto 1\Analisis.Proyecto1\obj\Debug\Analisis.Proyecto1.exe
+E:\Proyecto 1\Analisis.Proyecto1\obj\Debug\Analisis.Proyecto1.pdb
+E:\Proyecto 1\Analisis.Proyecto1\bin\Debug\Analisis.Proyecto1.exe
+E:\Proyecto 1\Analisis.Proyecto1\bin\Debug\Analisis.Proyecto1.pdb
+E:\Proyecto 1\Analisis.Proyecto1\obj\Debug\Analisis.Proyecto1.csprojResolveAssemblyReference.cache

@@ -14,7 +14,7 @@ namespace Analisis.Proyecto1
         public List<Item> opciones = new List<Item>();
         List<List<List<List<int>>>> contenedor = new List<List<List<List<int>>>>();
         int tamañoMatriz;
-        long asig, comp;
+        long asig, comp, line;
         Random rnd = new Random();
 
         public Juego(int tamaño)
@@ -123,48 +123,48 @@ namespace Analisis.Proyecto1
         public bool descarteRec(List<Item> listaOpciones, int x, int y, List<List<Item>> tableRec)
         {
             for (int i = 0; i < listaOpciones.Count; i++)
-            {comp++;asig++;
-                bool xT = false;    asig++;
-                bool yT = false;    asig++;
+            {comp++;asig++;line++;
+                bool xT = false;    asig++; line++;
+                bool yT = false;    asig++; line++;
                 comp++; if (x == 0)
                 {
-                    xT = true; asig++;
+                    xT = true; asig++; line++;
                 }
                 else
                 {
                     comp++; if (tableRec[x - 1][y].abajo == listaOpciones[i].arriba)
                     {
-                        xT = true; asig++;
+                        xT = true; asig++; line++;
                     }
                 }
                 comp++; if (y == 0)
                 {
-                    yT = true; asig++;
+                    yT = true; asig++; line++;
                 }
                 else
                 {
                     comp++; if (tableRec[x][y - 1].derecha == listaOpciones[i].izquierda)
                     {
-                        yT = true; asig++;
+                        yT = true; asig++; line++;
                     }
                 }
                 comp+=2;if (xT && yT)
                 {
-                    tableRec[x][y] = listaOpciones[i];  asig++;
+                    tableRec[x][y] = listaOpciones[i];  asig++; line++;
                     comp++; if (listaOpciones.Count == 1)
                     {
-                        return true;
+                        return true; 
                     }
                     else
                     {
-                        Item temp = listaOpciones[i];   asig++;
-                        listaOpciones.RemoveAt(i);      asig++;
+                        Item temp = listaOpciones[i];   asig++; line++;
+                        listaOpciones.RemoveAt(i);      asig++; line++;
                         comp++;asig += 2; if (descarteRec(listaOpciones, x + (y / (tableRec[x].Count - 1)), (y + 1) % tableRec[x].Count, tableRec))
                         {
-                            listaOpciones.Insert(i, temp); asig++;
+                            listaOpciones.Insert(i, temp); asig++; line++;
                             return true;
                         }
-                        listaOpciones.Insert(i, temp);  asig++;
+                        listaOpciones.Insert(i, temp);  asig++; line++;
                     }
                 }
             }comp++;
@@ -196,36 +196,36 @@ namespace Analisis.Proyecto1
             comp++; if (listaOpciones.Count != 0)
             {
                 for (int i = 0; i < listaOpciones.Count; i++)
-                {comp++;asig++;
-                    tableRec[x][y] = listaOpciones[i];      asig++;
-                    Item temp =listaOpciones[i];            asig++;
-                    listaOpciones.RemoveAt(i);              asig++;
+                {comp++;asig++; line++;
+                    tableRec[x][y] = listaOpciones[i];      asig++; line++;
+                    Item temp =listaOpciones[i];            asig++; line++;
+                    listaOpciones.RemoveAt(i);              asig++; line++;
 
-                    asig += 3; bool rt=fuerzaRec(listaOpciones, x + (y / (tableRec[x].Count - 1)), (y + 1) % tableRec[x].Count, tableRec);
-                    listaOpciones.Insert(i, temp);      asig++;
+                    asig += 3; line++; bool rt=fuerzaRec(listaOpciones, x + (y / (tableRec[x].Count - 1)), (y + 1) % tableRec[x].Count, tableRec);
+                    listaOpciones.Insert(i, temp);      asig++; line++;
                     comp++; if (rt)
                         return true;
                 }comp++;
             }
             else
             {
-                bool prueba = true;     asig++;
+                bool prueba = true;     asig++; line++;
                 for (int i = 0; i < tableRec.Count && prueba; i++)
-                {comp+=2;asig++;
+                {comp+=2;asig++; line++;
                     for (int j = 0; j < tableRec[i].Count && prueba; j++)
-                    {comp+=2;asig++;
+                    {comp+=2;asig++; line++;
                         comp++;if (i != 0)
                         {
                             comp++;if (tableRec[i - 1][j].abajo != tableRec[i][j].arriba)
                             {
-                                prueba = false;     asig++;
+                                prueba = false;     asig++; line++;
                             }
                         }
                         comp++;if (j != 0)
                         {
                             comp++;if (tableRec[i][j - 1].derecha != tableRec[i][j].izquierda)
                             {
-                                prueba = false;asig++;
+                                prueba = false;asig++; line++;
                             }
                         }
                     }comp++;
@@ -251,33 +251,36 @@ namespace Analisis.Proyecto1
         {
             //decalra el contenedor, que categoriza las piezas y mantiene un conteo de aquellas que estan disponibles
             asig = 0; comp = 0;
-            contenedor = new List<List<List<List<int>>>>();     asig++;
+            contenedor = new List<List<List<List<int>>>>();     asig++; line++;
             for (int i = 0; i < 10; i++) 
-            {comp++; asig++;
-                contenedor.Add(new List<List<List<int>>>());    asig++;
+            {comp++; asig++; line++;
+                contenedor.Add(new List<List<List<int>>>());    asig++; line++;
 
                 for (int j = 0; j < 4; j++)
-                {comp++; asig++;
-                    contenedor[i].Add(new List<List<int>>());   asig++;
+                {comp++; asig++; line++;
+                    contenedor[i].Add(new List<List<int>>());   asig++; line++;
                     for (int k = 0; k < 2; k++)
                     {comp ++; asig++;
-                        contenedor[i][j].Add(new List<int>());  asig++;
-                    }comp++;
-                    contenedor[i][j][1].Add(0);                 asig++;
-                }comp++;
+                        contenedor[i][j].Add(new List<int>());  asig++; line++;
+                    }
+                    comp++;
+                    contenedor[i][j][1].Add(0);                 asig++; line++;
+                }
+                comp++;
             }comp++;
             //conteo
             for (int i = 0; i < opciones.Count; i++)
-            {comp++; asig++;
-                contenedor[opciones[i].arriba][0][0].Add(i);    asig++;
-                contenedor[opciones[i].abajo][1][0].Add(i);     asig++;
-                contenedor[opciones[i].izquierda][2][0].Add(i); asig++;
-                contenedor[opciones[i].derecha][3][0].Add(i);   asig++;
-                contenedor[opciones[i].arriba][0][1][0]++;      asig++;
-                contenedor[opciones[i].abajo][1][1][0]++;       asig++;
-                contenedor[opciones[i].izquierda][2][1][0]++;   asig++;
-                contenedor[opciones[i].derecha][3][1][0]++;     asig++;
-            }comp++;
+            {comp++; asig++; line++;
+                contenedor[opciones[i].arriba][0][0].Add(i);    asig++; line++;
+                contenedor[opciones[i].abajo][1][0].Add(i);     asig++; line++;
+                contenedor[opciones[i].izquierda][2][0].Add(i); asig++; line++;
+                contenedor[opciones[i].derecha][3][0].Add(i);   asig++; line++;
+                contenedor[opciones[i].arriba][0][1][0]++;      asig++; line++;
+                contenedor[opciones[i].abajo][1][1][0]++;       asig++; line++;
+                contenedor[opciones[i].izquierda][2][1][0]++;   asig++; line++;
+                contenedor[opciones[i].derecha][3][1][0]++;     asig++; line++;
+            }
+            comp++;
             WriteLine("____________________________");
             WriteLine("\nALGORITMO POR SELECCION Y TANTEO...");
             imprimirLista(opciones);
@@ -307,26 +310,26 @@ namespace Analisis.Proyecto1
         public bool tanteoRec(List<List<Item>> tableRec, List<Item> listaOpciones, List<List<int>> grupos, int x, int y)
         {
             //para establecer el orden en que los grupos serán evaluados
-            List<int> ordenIndices = new List<int>(); asig++;
+            List<int> ordenIndices = new List<int>(); asig++; line++;
             comp += 2; if (x == 0 || x == tableRec.Count - 1)
             {
-                ordenIndices.Add(x/(tableRec.Count - 1));   asig++;
-                ordenIndices.Add(2);                        asig++;
-                ordenIndices.Add(3);                        asig++;
-                ordenIndices.Add(4);                        asig++;
+                ordenIndices.Add(x/(tableRec.Count - 1));   asig++; line++;
+                ordenIndices.Add(2);                        asig++; line++;
+                ordenIndices.Add(3);                        asig++; line++;
+                ordenIndices.Add(4);                        asig++; line++;
             }
             else
             {
                 comp+=2; if (y == 0 || y == tableRec.Count - 1)
                 {
-                    ordenIndices.Add(y/(tableRec.Count - 1));   asig++;
-                    ordenIndices.Add(0);                        asig++;
-                    ordenIndices.Add(1);                        asig++;
-                    ordenIndices.Add(4);                        asig++;
+                    ordenIndices.Add(y/(tableRec.Count - 1));   asig++; line++;
+                    ordenIndices.Add(0);                        asig++; line++;
+                    ordenIndices.Add(1);                        asig++; line++;
+                    ordenIndices.Add(4);                        asig++; line++;
                 }
                 else
                 {
-                    ordenIndices.Add(4);                        asig++;
+                    ordenIndices.Add(4);                        asig++; line++;
                 } 
             }
 
@@ -334,25 +337,25 @@ namespace Analisis.Proyecto1
             List<int> prometedores = new List<int>();
 
             for (int i = 0; i < ordenIndices.Count; i++)
-            {comp++; asig++;
+            {comp++; asig++; line++;
                 for (int j = 0; j < grupos[ordenIndices[i]].Count; j++)
-                {comp++; asig++;
+                {comp++; asig++; line++;
                     comp++; if (listaOpciones[grupos[ordenIndices[i]][j]].colocado)
                     {
                         continue;
                     }
-                    bool xT = false;    asig++;
-                    bool yT = false;    asig++;
+                    bool xT = false;    asig++; line++;
+                    bool yT = false;    asig++; line++;
                     comp++; if (x == 0)
                     {
-                        xT = true;      asig++;
+                        xT = true;      asig++; line++;
                     }
                         
                     else
                     {
                         comp++; if (tableRec[x - 1][y].abajo == listaOpciones[grupos[ordenIndices[i]][j]].arriba)
                         {
-                            xT = true;  asig++;
+                            xT = true;  asig++; line++;
                         }
                         else
                             continue;
@@ -360,13 +363,13 @@ namespace Analisis.Proyecto1
 
                     comp++; if (y == 0)
                     {
-                        yT = true; asig++;
+                        yT = true; asig++; line++;
                     }
                     else
                     {
                         comp++; if (tableRec[x][y - 1].derecha == listaOpciones[grupos[ordenIndices[i]][j]].izquierda)
                         {
-                            yT = true; asig++;
+                            yT = true; asig++; line++;
                         }
                         else
                             continue;
@@ -374,40 +377,40 @@ namespace Analisis.Proyecto1
 
                     comp+=2; if (xT && yT)
                     {
-                        prometedores.Add(grupos[ordenIndices[i]][j]);   asig++;
+                        prometedores.Add(grupos[ordenIndices[i]][j]);   asig++; line++;
                     }
                 }comp++;
             }comp++;
             //recorre los elementos prometedores, insertando a cada uno de ellos en la misma casilla, llamando al siguiente nivel de 
             //recursividad en cada insercion
             for (int item = 0; item < prometedores.Count; item++)
-            {comp++; asig++;
-                tableRec[x][y] = listaOpciones[prometedores[item]];     asig++;
+            {comp++; asig++; line++;
+                tableRec[x][y] = listaOpciones[prometedores[item]];     asig++; line++;
                 //se reduce el contador de las categorias en contador que incluian este item
-                contenedor[listaOpciones[prometedores[item]].arriba][0][1][0]--;    asig++;
-                contenedor[listaOpciones[prometedores[item]].abajo][1][1][0]--;     asig++;
-                contenedor[listaOpciones[prometedores[item]].izquierda][2][1][0]--; asig++;
-                contenedor[listaOpciones[prometedores[item]].derecha][3][1][0]--;   asig++;
+                contenedor[listaOpciones[prometedores[item]].arriba][0][1][0]--;    asig++; line++;
+                contenedor[listaOpciones[prometedores[item]].abajo][1][1][0]--;     asig++; line++;
+                contenedor[listaOpciones[prometedores[item]].izquierda][2][1][0]--; asig++; line++;
+                contenedor[listaOpciones[prometedores[item]].derecha][3][1][0]--;   asig++; line++;
                 //comprueba si el item insertado completó el tablero, significando que se ha acabado el juego y la recursividad
-                comp+=2; if (x == tableRec.Count - 1 && y == tableRec.Count - 1)
+                comp +=2; if (x == tableRec.Count - 1 && y == tableRec.Count - 1)
                 {
-                    imprimirGrupos(grupos);
+                    imprimirGrupos(grupos); line++;
                     return true;
                 }
                 else
                 {
                     //asigna el item a la casilla, despues llama a la recursividad para que pruebe bajo sus propias variables
-                    listaOpciones[prometedores[item]].colocado = true;              asig++;
+                    listaOpciones[prometedores[item]].colocado = true;              asig++; line++;
 
                     //la recursividad tiene una funcion intermediaria, la cual calcula los grupos para la nueva recursividad
                     //a partir de los grupos actuales
-                    asig+=3; bool rt = actgrupotanteorec(tableRec, listaOpciones, grupos, x +(y / (tableRec[x].Count - 1)), (y + 1) % tableRec[x].Count,listaOpciones[prometedores[item]]);
+                    asig +=3; bool rt = actgrupotanteorec(tableRec, listaOpciones, grupos, x +(y / (tableRec[x].Count - 1)), (y + 1) % tableRec[x].Count,listaOpciones[prometedores[item]]);
                     //siempre es preferible devolver todo aquello que no sea el tablero de juego a su estado original
-                    listaOpciones[prometedores[item]].colocado = false;                 asig++;
-                    contenedor[listaOpciones[prometedores[item]].arriba][0][1][0]++;    asig++;
-                    contenedor[listaOpciones[prometedores[item]].abajo][1][1][0]++;     asig++;
-                    contenedor[listaOpciones[prometedores[item]].izquierda][2][1][0]++; asig++;
-                    contenedor[listaOpciones[prometedores[item]].derecha][3][1][0]++;   asig++;
+                    listaOpciones[prometedores[item]].colocado = false;                 asig++; line++;
+                    contenedor[listaOpciones[prometedores[item]].arriba][0][1][0]++;    asig++; line++;
+                    contenedor[listaOpciones[prometedores[item]].abajo][1][1][0]++;     asig++; line++;
+                    contenedor[listaOpciones[prometedores[item]].izquierda][2][1][0]++; asig++; line++;
+                    contenedor[listaOpciones[prometedores[item]].derecha][3][1][0]++;   asig++; line++;
 
                     comp++;if (rt)
                     {
@@ -425,50 +428,51 @@ namespace Analisis.Proyecto1
         /// <returns></returns>
         public List<List<int>> creargrupos()
         {
-            asig++; List<List<int>> grupos = new List<List<int>>();
+            asig++; line++; List<List<int>> grupos = new List<List<int>>();
             
             for (int i = 0; i < 5; i++)
-            {asig++; comp++;
-                grupos.Add(new List<int>()); asig ++;
-            }comp++;
+            {asig++; comp++; line++;
+                grupos.Add(new List<int>()); asig ++; line++;
+            }
+            comp++;
 
             //grupos: 
             // primera iteracion: arriba, abajo, 
             // segunda iteracion: izq, der, 
             // dos iteraciones: comunes
 
-            asig++; List<int> restaurar = new List<int>();
+            asig++; line++; List<int> restaurar = new List<int>();
             //Para asignar un item a algun grupo especial, no debe haber ningun item disponible que funcione como contraparte a uno de los lados del item en cuestion
             for (int i = 0; i < 10; i++)
-            {comp++; asig++;
+            {comp++; asig++; line++;
                 for (int j = 0; j < 3; j = j + 2)
-                {comp++; asig++;
-                    comp+=2; if (contenedor[i][j][1][0] == 0 && contenedor[i][j + 1][1][0] != 0)
+                {comp++; asig++; line++;
+                    comp +=2; if (contenedor[i][j][1][0] == 0 && contenedor[i][j + 1][1][0] != 0)
                     {
                         for (int k = 0; k < contenedor[i][j + 1][0].Count; k++)
-                        {comp++; asig++;
+                        {comp++; asig++; line++;
                             comp++; if (!opciones[contenedor[i][j + 1][0][k]].colocado)
                             {
                                 comp++; if (!grupos[j + 1].Contains(contenedor[i][j + 1][0][k]))
                                 {
-                                    opciones[contenedor[i][j + 1][0][k]].colocado = true;       asig++;
-                                    grupos[j + 1].Add(contenedor[i][j + 1][0][k]);              asig++;
-                                    restaurar.Add(contenedor[i][j + 1][0][k]);                  asig++;
+                                    opciones[contenedor[i][j + 1][0][k]].colocado = true;       asig++; line++;
+                                    grupos[j + 1].Add(contenedor[i][j + 1][0][k]);              asig++; line++;
+                                    restaurar.Add(contenedor[i][j + 1][0][k]);                  asig++; line++;
                                 }
                             }
                         }comp++;
                     }
                     else if (contenedor[i][j][1][0] != 0 && contenedor[i][j + 1][1][0] == 0)
-                    {comp+=2;
+                    {comp+=2; line++;
                         for (int k = 0; k < contenedor[i][j][0].Count; k++)
-                        {comp++; asig++;
+                        {comp++; asig++; line++;
                             comp++; if (!opciones[contenedor[i][j][0][k]].colocado)
                             {
                                 comp++; if (!grupos[j].Contains(contenedor[i][j][0][k]))
                                 {
-                                    grupos[j].Add(contenedor[i][j][0][k]);                      asig++;
-                                    opciones[contenedor[i][j][0][k]].colocado = true;           asig++;
-                                    restaurar.Add(contenedor[i][j][0][k]);                      asig++;
+                                    grupos[j].Add(contenedor[i][j][0][k]);                      asig++; line++;
+                                    opciones[contenedor[i][j][0][k]].colocado = true;           asig++; line++;
+                                    restaurar.Add(contenedor[i][j][0][k]);                      asig++; line++;
                                 }
                             }
                         }comp++;
@@ -476,27 +480,27 @@ namespace Analisis.Proyecto1
                     else
                     {
                         for (int k = 0; k < contenedor[i][j + 1][0].Count; k++)
-                        {comp++; asig++;
+                        {comp++; asig++; line++;
                             comp++; if (!opciones[contenedor[i][j + 1][0][k]].colocado)
                             {
                                 comp++; if (!grupos[4].Contains(contenedor[i][j + 1][0][k]))
                                 {
-                                    grupos[4].Add(contenedor[i][j + 1][0][k]);                  asig++;
-                                    opciones[contenedor[i][j + 1][0][k]].colocado = true;       asig++;
-                                    restaurar.Add(contenedor[i][j + 1][0][k]);                  asig++;
+                                    grupos[4].Add(contenedor[i][j + 1][0][k]);                  asig++; line++;
+                                    opciones[contenedor[i][j + 1][0][k]].colocado = true;       asig++; line++;
+                                    restaurar.Add(contenedor[i][j + 1][0][k]);                  asig++; line++;
 
                                 }
                             }
                         }comp++;
                         for (int k = 0; k < contenedor[i][j][0].Count; k++)
-                        {comp++;asig++;
+                        {comp++;asig++; line++;
                             comp++; if (!opciones[contenedor[i][j][0][k]].colocado)
                             {
                                 comp++; if (!grupos[4].Contains(contenedor[i][j][0][k]))
                                 {
-                                    grupos[4].Add(contenedor[i][j][0][k]);                      asig++;
-                                    opciones[contenedor[i][j][0][k]].colocado = true;           asig++;
-                                    restaurar.Add(contenedor[i][j][0][k]);                      asig++;
+                                    grupos[4].Add(contenedor[i][j][0][k]);                      asig++; line++;
+                                    opciones[contenedor[i][j][0][k]].colocado = true;           asig++; line++;
+                                    restaurar.Add(contenedor[i][j][0][k]);                      asig++; line++;
                                 }
                             }
                         }comp++;
@@ -505,9 +509,10 @@ namespace Analisis.Proyecto1
             }comp++;
             //se utilizó la bandera "colocado" para realizar los calculos de grupos, en esta parte se restauran
             for (int res = 0; res < restaurar.Count; res++)
-            {comp++;asig++;
-                opciones[restaurar[res]].colocado = false;      asig++;
-            }comp++;
+            {comp++;asig++; line++;
+                opciones[restaurar[res]].colocado = false;      asig++; line++;
+            }
+            comp++;
             imprimirGrupos(grupos);
             return grupos;
         }
@@ -524,28 +529,28 @@ namespace Analisis.Proyecto1
         /// <returns>Retorna el valor que retorne la siguiente recursividad</returns>
         public bool actgrupotanteorec(List<List<Item>> tableRec, List<Item> listaOpciones, List<List<int>> grupos, int x, int y, Item factor)
         {
-            List<int> indecesCont = new List<int>();    asig++;
-            List<int> recuperar = new List<int>();      asig++;
+            List<int> indecesCont = new List<int>();    asig++; line++;
+            List<int> recuperar = new List<int>();      asig++; line++;
             //asigna las casillas de contenedor que se van a evaluar
-            indecesCont.Add(factor.arriba);             asig++;
-            indecesCont.Add(factor.izquierda);          asig++;
+            indecesCont.Add(factor.arriba);             asig++; line++;
+            indecesCont.Add(factor.izquierda);          asig++; line++;
 
             //Para el numero de arriba, comprueba que existan más fichas con ese numero arriba, en caso de que no hayan, las fichas 
             //con ese numero abajo se envian al grupo de abajo
             //caso similar para el numero de arriba
             //además se conservan los cambios realizados para recuperarlos despues de llamar a la recursividad
             for (int i = 0; i < indecesCont.Count; i = i + 2)
-            {comp++;asig++;
-                comp+=2; if (contenedor[indecesCont[i]][i][1][0] == 0 && contenedor[indecesCont[i]][i + 1][1][0] != 0)
+            {comp++;asig++; line++;
+                comp +=2; if (contenedor[indecesCont[i]][i][1][0] == 0 && contenedor[indecesCont[i]][i + 1][1][0] != 0)
                 {
                     for (int j = 0; j < contenedor[indecesCont[i]][i + 1][0].Count; j++)
-                    {comp++;asig++;
-                        comp+=2; if ((!opciones[contenedor[indecesCont[i]][i + 1][0][j]].colocado) && grupos[4].Contains(contenedor[indecesCont[i]][i + 1][0][j]))
+                    {comp++;asig++; line++;
+                        comp +=2; if ((!opciones[contenedor[indecesCont[i]][i + 1][0][j]].colocado) && grupos[4].Contains(contenedor[indecesCont[i]][i + 1][0][j]))
                         {
-                            grupos[4].Remove(contenedor[indecesCont[i]][i + 1][0][j]);      asig++;
-                            grupos[i + 1].Add(contenedor[indecesCont[i]][i + 1][0][j]);     asig++;
-                            recuperar.Add(i + 1);                                           asig++;
-                            recuperar.Add(contenedor[indecesCont[i]][i + 1][0][j]);         asig++;
+                            grupos[4].Remove(contenedor[indecesCont[i]][i + 1][0][j]);      asig++; line++;
+                            grupos[i + 1].Add(contenedor[indecesCont[i]][i + 1][0][j]);     asig++; line++;
+                            recuperar.Add(i + 1);                                           asig++; line++;
+                            recuperar.Add(contenedor[indecesCont[i]][i + 1][0][j]);         asig++; line++;
                         }
                     }comp++;
                 }
@@ -553,10 +558,11 @@ namespace Analisis.Proyecto1
             bool rt = tanteoRec(tableRec, listaOpciones, grupos, x, y); asig++;
             //recupera los cambios realizados en el grupo
             for (int i = 0; i < recuperar.Count; i = i + 2)
-            {comp++;asig++;
-                grupos[recuperar[i]].Remove(recuperar[i + 1]);          asig++;
-                grupos[4].Add(recuperar[i + 1]);                        asig++;
-            }comp++;
+            {comp++;asig++; line++;
+                grupos[recuperar[i]].Remove(recuperar[i + 1]);          asig++; line++;
+                grupos[4].Add(recuperar[i + 1]);                        asig++; line++;
+            }
+            comp++;
             return rt;
         }
 

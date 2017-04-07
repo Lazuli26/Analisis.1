@@ -19,12 +19,12 @@ namespace Analisis.Proyecto1
 
         public Juego(int tamaño)
         {
+            tamañoMatriz = tamaño;
+            crearMatriz(respuesta);
             for (int x = 0; x < tamaño; x++)
             {
-                respuesta.Add(new List<Item>());
                 for (int y = 0; y < tamaño; y++)
                 {
-                    respuesta[x].Add(new Item());
                     if (x == 0)
                         respuesta[x][y].arriba = rnd.Next(0, 10);
                     else
@@ -38,33 +38,46 @@ namespace Analisis.Proyecto1
                     opciones.Add(respuesta[x][y]);
                 }
             }
-
-            Item aux;
-            for (int i = 0; i < opciones.Count; i++)
-            {
-                int randint = rnd.Next(0, opciones.Count - 1);
-                aux = opciones[i];
-                opciones[i] = opciones[randint];
-                opciones[randint] = aux;
-            }
-
-            for (int x = 0; x < tamaño; x++)
-            {
-                tablero.Add(new List<Item>());
-                for (int y = 0; y < tamaño; y++)
-                {
-                    tablero[x].Add(new Item());
-                }
-            }
-            tamañoMatriz = tamaño;
+            crearMatriz(tablero);
 
             WriteLine("\n\nMatriz original...");
             imprimir(respuesta);
         }
 
+        public Juego(List<Item> lista, int tamaño)
+        {
+            tamañoMatriz = tamaño;
+            this.opciones = lista;
+            crearMatriz(respuesta);
+
+            for (int x = 0; x < tamañoMatriz; x++)
+            {
+                for (int y = 0; y < tamañoMatriz; y++)
+                {
+                    respuesta[x][y] = lista[y + (x * tamaño)];
+                }
+            }
+
+            crearMatriz(tablero);
+
+            WriteLine("\n\nMatriz original...");
+            imprimir(respuesta);
+            WriteLine("\nLista original...");
+            imprimirLista(opciones);
+        }
+        public void crearMatriz(List<List<Item>> matriz)
+        {
+            for (int x = 0; x < tamañoMatriz; x++)
+            {
+                matriz.Add(new List<Item>());
+                for (int y = 0; y < tamañoMatriz; y++)
+                {
+                    matriz[x].Add(new Item());          
+                }
+            }
+        }
         public void desordenarLista()
         {
-
             Item aux;
             for (int i = 0; i < opciones.Count; i++)
             {
@@ -91,7 +104,6 @@ namespace Analisis.Proyecto1
             ordenarLista();
             opciones.Reverse();       
         }
-
 //------------------------------------------------------------------------------------------------------------------       
         public void descarte()
         {

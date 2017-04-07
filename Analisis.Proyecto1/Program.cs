@@ -35,6 +35,7 @@ namespace Analisis.Proyecto1
                 Write("Orden de la matriz: ");
                 if (int.TryParse(ReadLine(), out opc))
                 {
+                    //Juego juego = new Juego(opc);
                     juego = new Juego(opc);
 
                     WriteLine("\n\n-----------------------------------------------------");
@@ -69,7 +70,6 @@ namespace Analisis.Proyecto1
                     juego.desordenarLista();
                     juego.tanteo();
                     ReadKey();
-
                 }
             }
         }

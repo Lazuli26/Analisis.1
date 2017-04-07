@@ -17,9 +17,12 @@ namespace Analisis.Proyecto1
                 Write("Orden de la matriz: ");
                 if (int.TryParse(ReadLine(), out opc))
                 {
-                    Juego juego = new Juego(opc);
+                    //Juego juego = new Juego(opc);
+                    Juego juego = new Juego(new Fijas().llenarMatriz2(), 3);
+
                     WriteLine("\n\n-----------------------------------------------------");
                     WriteLine("\nLISTA DE OPCIONES EN EL CASO PROMEDIO: desordenado...");
+                    juego.desordenarLista();
                     juego.fuerza();
                     juego.descarte();
                     juego.tanteo();
@@ -40,7 +43,6 @@ namespace Analisis.Proyecto1
                     juego.descarte();
                     juego.tanteo();
                     ReadKey();
-
                 }
             }
         }
